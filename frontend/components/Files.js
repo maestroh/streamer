@@ -1,6 +1,7 @@
 import React from 'react';
 import Store from '../stores/store.js';
 import path from 'path';
+import Link from 'next/link';
 
 export default class Files extends React.Component {
     constructor(props) {
@@ -8,12 +9,16 @@ export default class Files extends React.Component {
         this.state = { files: [] };
     }
 
+    static async getInitialProps({query}){
+        console.log('query',query);
+    }
+
     componentDidMount() {
         this.getFiles('');
     }
 
     play(file) {
-        var route = path.join('/api', file);
+        var route = path.join('/api/audio', file);
         this.setState({ audio: route });
     }
 
@@ -34,13 +39,13 @@ export default class Files extends React.Component {
             if (f.isDirectory) {
                 return <div
                     style={{ color: 'blue' }}
-                    onClick={() => this.getFiles(f.path)}>
+                    onClick={() => this.getFiles(f.id)}>
                     <span>{f.file}</span>
                 </div>
             } else {
                 return <div
                     style={{ color: 'black' }}
-                    onClick={() => this.play(f.path)}>
+                    onClick={() => this.play(f.id)}>
                     <span>{f.file}</span>
                 </div>
             }
