@@ -9,8 +9,10 @@ export default class Files extends React.Component {
         this.state = { files: [] };
     }
 
-    static async getInitialProps({query}){
-        console.log('query',query);
+    static async getInitialProps({pathname, query, req, res, xhr, err}){
+        console.log('hello');
+      return {something:"something",
+          pathname, query, req, res, xhr, err};
     }
 
     componentDidMount() {
@@ -25,16 +27,24 @@ export default class Files extends React.Component {
     getFiles(file) {
         Store.get(file)
             .then(response => {
-                console.log('response:', response);
                 return response.json();
             })
             .then(value => {
-                console.log(value);
                 this.setState({ files: value });
             });
     }
 
+    /* return <Link href={'/?id=' + f.id} as={f.path} /> */
+
+
+/*
+return <div
+                    style={{ color: 'blue' }}
+                    onClick={() => this.getFiles(f.id)}>
+                    <span>{f.file}</span>
+                </div>*/
     render() {
+        console.log("props", this.props);
         var files = this.state.files.map(f => {
             if (f.isDirectory) {
                 return <div
