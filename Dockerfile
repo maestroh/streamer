@@ -12,7 +12,8 @@ ADD ./ /app
 
 WORKDIR /app/frontend
 RUN rm -rf node_modules \
-    && npm install
+    && npm install \
+    && npm run build
     
 WORKDIR /app/backend
 RUN rm -rf node_modules \
