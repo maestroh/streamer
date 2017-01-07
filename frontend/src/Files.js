@@ -10,11 +10,12 @@ export default class Files extends React.Component {
     }
 
     componentDidMount() {
-        this.getFiles(this.props.params.splat);
+        this.getFiles(this.props.params.id);
     }
 
-    componentWillReceiveProps() {
-        this.getFiles(this.props.params.splat);
+    componentWillReceiveProps(nextProps) {
+        console.log('received props', nextProps.params.id);
+        this.getFiles(nextProps.params.id);
     }
 
     play(file) {
@@ -28,12 +29,13 @@ export default class Files extends React.Component {
                 return response.json();
             })
             .then(value => {
+                console.log('set state', value);
                 this.setState({ files: value });
             });
     }
 
     render() {
-        console.log("props", this.props);
+        console.log("props", this.props.params.id);
         var files = this.state.files.map(f => {
             if (f.isDirectory) {
                 return <div>
