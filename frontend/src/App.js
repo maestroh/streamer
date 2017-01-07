@@ -1,6 +1,10 @@
 import React from 'react';
 import Router from './Router.js';
+import Player from './Player.js';
 
 export default () => (
-  <Router />
+  <div>
+    <Player />
+    <Router />
+  </div>
 )

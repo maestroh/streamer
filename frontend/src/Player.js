@@ -1,24 +1,22 @@
 import React from 'react';
 import Store from './store.js';
-import path from 'path';
-import { Link } from 'react-router';
-import Files from './Files.js';
 
-export default class Player extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    var player = () => {
-      if (!this.state.audio)
-        return null;
-      else
-        return <audio src={this.state.audio} controls />
+export default class Audio extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { audio: undefined };
     }
 
-    return <div>
-      <Files directory={this.props.params.id}/>
-    </div>
-  }
+    componentDidMount() {
+        // subscript to audio changes and set state
+        Store.subscribe((audio) => {
+            this.setState({audio:audio});
+        });
+    }
+
+    render() {
+        return this.state.audio ?
+            <audio src={this.state.audio} controls />
+            : <div>Audio Player Here</div>;
+    }
 }

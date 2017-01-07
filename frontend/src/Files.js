@@ -10,11 +10,11 @@ export default class Player extends React.Component {
   }
 
 componentWillMount() {
-    this.getFiles(this.props.directory);
+    this.getFiles(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getFiles(nextProps.directory);
+    this.getFiles(nextProps.params.id);
   }
 
   getFiles(directory){
@@ -29,6 +29,7 @@ componentWillMount() {
 
   play(file) {
     // raise event to play file
+    Store.play(file);
   }
 
   render() {
@@ -53,6 +54,7 @@ componentWillMount() {
     });
 
     return <div>
+      <Link to="/">HOME!</Link>
       {files}
     </div>
   }
