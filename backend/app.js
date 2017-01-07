@@ -4,11 +4,11 @@ var fs = require("fs");
 var path = require("path");
 
 // todo
-// show folder path in url
 // separate player from folder list
 // allow navigation while playing
 // play all contents in folder
 // allow playing prev and next track
+// Style the thing
 
 app.get("/audio/:id", (req, res) => {
   var file = new Buffer(req.params.id, 'base64').toString();
@@ -57,27 +57,6 @@ app.get("/dir/:id*?", (req, res) => {
     }));
   })
 });
-
-// app.get("/dir/:id*?", (req, res) => {
-//   console.log('id', req.params.id);
-//   var dirPath = req.params.id ? new Buffer(req.params.id, 'base64').toString() : "/";
-//   console.log('dirpath', dirPath);
-//   fs.stat(dirPath, (err, stats) => {
-//     fs.readdir(dirPath, (err, files) => {
-//       res.send(files.map((f) => {
-//         var filePath = path.join(dirPath, f);
-//         console.log('filePath', filePath);
-//         var stats = fs.statSync(filePath);
-//         return {
-//           file: f,
-//           isDirectory: stats.isDirectory(),
-//           path: filePath,
-//           id: new Buffer(filePath).toString('base64')
-//         };
-//       }));
-//     });
-//   })
-// });
 
 app.listen(3001, function () {
   console.log('Listening on port 3001!');
