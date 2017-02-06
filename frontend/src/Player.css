@@ -1,0 +1,14 @@
+#timeline{
+    width: 400px;
+    height: 20px;
+    border-radius: 15px;
+    background: rgba(0,0,0,.3);
+}
+
+#handle{
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	margin-top: 1px;
+	background: rgba(0, 0, 0,1);
+}

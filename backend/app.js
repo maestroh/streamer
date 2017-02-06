@@ -4,8 +4,6 @@ var fs = require("fs");
 var path = require("path");
 
 // todo
-// separate player from folder list
-// allow navigation while playing
 // play all contents in folder
 // allow playing prev and next track
 // Style the thing
