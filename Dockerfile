@@ -1,3 +1,6 @@
+# docker run -it -p 8080:8080 -v ~/Downloads/tuba:/music streamer:v1
+# eval "$(docker-machine env default)"
+
 FROM node:6.9.2-alpine
 ENV SHELL /bin/sh
 
