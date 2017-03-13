@@ -8,7 +8,7 @@ var path = require("path");
 // allow playing prev and next track
 // Style the thing
 
-app.get("/audio/:id", (req, res) => {
+app.get("/api/audio/:id", (req, res) => {
   var file = new Buffer(req.params.id, 'base64').toString();
   fs.stat(file, (err, stats) => {
     var range = req.headers.range;
@@ -37,11 +37,11 @@ app.get("/audio/:id", (req, res) => {
   })
 });
 
+const baseDir = "C:/Users/nael/Downloads/tuba"
 
 
-
-app.get("/dir/:id*?", (req, res) => {
-  var dirPath = req.params.id ? new Buffer(req.params.id, 'base64').toString() : "/";
+app.get("/api/dir/:id*?", (req, res) => {
+  var dirPath = req.params.id ? new Buffer(req.params.id, 'base64').toString() : baseDir;
   fs.readdir(dirPath, (err, files) => {
     res.send(files.map((f) => {
       var filePath = path.join(dirPath, f);
