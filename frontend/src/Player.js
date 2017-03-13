@@ -15,7 +15,7 @@ export default class Player extends React.Component {
   componentDidMount() {
     this.audio.addEventListener("timeupdate", () => {
       let ratio = this.audio.currentTime / this.audio.duration;
-      let position = this.timeline.offsetWidth * ratio;
+      let position = (this.timeline.offsetWidth * ratio) + this.timeline.offsetLeft;
       this.positionHandle(position);
     });
   };
@@ -36,8 +36,8 @@ export default class Player extends React.Component {
 
   mouseMove = (e) => {
     this.positionHandle(e.pageX);
-    this.audio.currentTime = (e.pageX / this.timeline.offsetWidth) * this.audio.duration;
-  };
+    this.audio.currentTime = ((e.pageX - this.timeline.offsetLeft) / this.timeline.offsetWidth) * this.audio.duration;
+ };
 
   mouseUp = (e) => {
     window.removeEventListener('mousemove', this.mouseMove);

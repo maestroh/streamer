@@ -1,21 +1,40 @@
 import path from 'path';
 
-let subscription = null;
+class PlayStore {
+  constructor() {
+    this._subscription = null;
+  }
+  subscribe(cb) {
+    this._subscription = cb;
+  }
 
-class Store{
-    get(dir){
-        if (!dir) dir = '';
-        return fetch(path.join('/api/dir', dir));
-    }
-
-    subscribe(cb){
-        subscription = cb;
-    }
-
-    play(file){
-        var route = path.join('/api/audio', file);
-        subscription(route);
-    }
+  play(file) {
+    var route = path.join('/api/audio', file);
+    this._subscription(route);
+  }
 }
 
-export default new Store();
+class PlaylistStore {
+  constructor() {
+    this._subscription = null;
+  }
+  subscribe(cb) {
+    this._subscription = cb;
+  }
+  load(files, file) {
+    this._subscription(files, file);
+  }
+
+}
+
+class DirectoryStore {
+  get(dir) {
+    if (!dir) dir = '';
+    return fetch(path.join('/api/dir', dir));
+  }
+}
+
+let playStore = new PlayStore();
+let directoryStore = new DirectoryStore();
+let playlistStore = new PlaylistStore();
+export { playStore, directoryStore, playlistStore };

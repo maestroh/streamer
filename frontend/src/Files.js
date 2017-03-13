@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from './store.js';
+import { directoryStore, playlistStore } from './store.js';
 import { Link } from 'react-router';
 
 export default class Player extends React.Component {
@@ -9,7 +9,7 @@ export default class Player extends React.Component {
     this.state = { files: [] };
   }
 
-componentWillMount() {
+  componentWillMount() {
     this.getFiles(this.props.params.id);
   }
 
@@ -17,8 +17,8 @@ componentWillMount() {
     this.getFiles(nextProps.params.id);
   }
 
-  getFiles(directory){
-    Store.get(directory)
+  getFiles(directory) {
+    directoryStore.get(directory)
       .then(response => {
         return response.json();
       })
@@ -29,7 +29,7 @@ componentWillMount() {
 
   play(file) {
     // raise event to play file
-    Store.play(file);
+    playlistStore.load(this.state.files.filter((f) => !f.isDirectory), file);
   }
 
   render() {
