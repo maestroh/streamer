@@ -1,6 +1,5 @@
 import React from 'react';
 import Router from './Router.js';
-import { playlistStore } from './store.js';
 import Playlist from './Playlist.js';
 
 export default class App extends React.Component {
