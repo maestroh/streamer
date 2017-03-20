@@ -1,12 +1,9 @@
+#!/usr/bin/env node
 var express = require('express');
 var app = express();
 var fs = require("fs");
 var path = require("path");
-
-// todo
-// play all contents in folder
-// allow playing prev and next track
-// Style the thing
+var readline = require("readline");
 
 app.get("/api/audio/:id", (req, res) => {
   var file = new Buffer(req.params.id, 'base64').toString();
@@ -37,24 +34,61 @@ app.get("/api/audio/:id", (req, res) => {
   })
 });
 
-const baseDir = "C:/Users/nael/Downloads/tuba"
-
-
 app.get("/api/dir/:id*?", (req, res) => {
-  var dirPath = req.params.id ? new Buffer(req.params.id, 'base64').toString() : baseDir;
-  fs.readdir(dirPath, (err, files) => {
-    res.send(files.map((f) => {
-      var filePath = path.join(dirPath, f);
-      var stats = fs.statSync(filePath);
-      return {
-        file: f,
-        isDirectory: stats.isDirectory(),
-        path: filePath,
-        id: new Buffer(filePath).toString('base64')
-      };
-    }));
-  })
+  if (!req.params.id) {
+    let lines = [];
+    let rl = readline.createInterface({
+      input: fs.createReadStream(path.join(__dirname, "streamer.config"))
+    });
+
+    rl.on('line', (line) => {
+      lines.push({
+        file: line,
+        isDirectory: true,
+        path: line,
+        id: new Buffer(line).toString('base64')
+      });
+    });
+
+    rl.on('close', () => { 
+     
+      res.send(lines); 
+    });
+
+
+
+
+
+    // fs.readFile(path.join(__dirname, "streamer.config"), "utf8", (err, data) => {
+    //   console.log(data);
+    //   console.log(typeof data);
+    //   res.send(data.toString().split('/n').map((f) =>{
+    //     return {
+    //       file: f,
+    //       isDirectory: true,
+    //       path: f,
+    //       id: new Buffer(f).toString('base64')
+    //     }
+    //   }));
+    // });
+  } else {
+    var dirPath = new Buffer(req.params.id, 'base64').toString();
+    fs.readdir(dirPath, (err, files) => {
+      res.send(files.map((f) => {
+        var filePath = path.join(dirPath, f);
+        var stats = fs.statSync(filePath);
+        return {
+          file: f,
+          isDirectory: stats.isDirectory(),
+          path: filePath,
+          id: new Buffer(filePath).toString('base64')
+        };
+      }));
+    });
+  }
 });
+
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.listen(3001, function () {
   console.log('Listening on port 3001!');

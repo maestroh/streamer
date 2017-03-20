@@ -8,6 +8,9 @@
   },
   "author": "",
   "license": "ISC",
+  "bin":{
+    "streamer":"./app.js"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "ringbufferjs": "0.0.1"
