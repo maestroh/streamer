@@ -2,7 +2,7 @@ import React from 'react';
 import { directoryStore, playlistStore } from './store.js';
 import { Link } from 'react-router';
 
-export default class Player extends React.Component {
+export default class Files extends React.Component {
 
   constructor(props) {
     super(props);
