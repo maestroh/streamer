@@ -9,7 +9,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <div style={{display:'flex'}}>
+    return <div style={{display:'flex', justifyContent:'space-between'}}>
       <Router />
       <Playlist />
     </div>
